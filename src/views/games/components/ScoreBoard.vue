@@ -1,105 +1,83 @@
 <template>
   <div style="margin:15px;">
-    <el-row>
-      <el-col v-for="o in 2" :key="o" :span="12">
-        hello
-      </el-col>
-    </el-row>
+    <div v-if="gameData !={}" :shadow="true" class="wallet-header">
+      <el-row>
+        <el-col :span="10">
+          <ul style="" class="top-pannel">
+            <li>
+              <svg-icon icon-class="international" style="width: 50px;height: 50px"/>
+            </li>
+            <li>
+              <div class="wallet-amount">{{ gameData.team1.name }}</div>
+              <div style="padding: 5px">Total Score :  {{ totalScoreTeam1 }}</div>
+              <div style="padding: 5px">Attack Count : </div>
+            </li>
+          </ul>
+        </el-col>
+        <el-col :span="4">
+          <el-tag v-if="gameData.status==2" type="success">Live</el-tag>
+          <el-tag v-if="gameData.status==1" type="info">Not Started</el-tag>
+          <el-tag v-if="gameData.status==3" type="warning">Finished</el-tag>
+        </el-col>
+        <el-col :span="10">
+          <ul class="top-pannel right" style="float:right">
+            <li>
+              <div class="wallet-amount">{{ gameData.team2.name }}</div>
+              <div style="padding: 5px">Tota Score : {{ totalScoreTeam2 }}</div>
+              <div style="padding: 5px">Attack Count : </div>
+            </li>
+            <li>
+              <svg-icon icon-class="international" style="width: 50px;height: 50px"/>
+            </li>
+          </ul>
+        </el-col>
+
+      </el-row>
+
+    </div>
+
     <el-row class="createPost-main-container">
-      <el-col :span="24">
+      <el-col :span="12">
         <div >
           <div class="container">
             <div class="page-header">
               <h3 id="timeline">Timeline</h3>
             </div>
-            <ul class="timeline">
-              <li>
+            <ul class="timeline" >
+              <li v-for="(score,index) in list" v-if="(index)%2==0" :key="score">
                 <div class="timeline-badge"><i class="glyphicon glyphicon-check"/></div>
                 <div class="timeline-panel">
                   <div class="timeline-heading">
-                    <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"/> 11 hours ago via Twitter</small></p>
+                    <h4 class="timeline-title">{{ score.rules.name }}</h4>
+                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"/> {{ score.updated_at }}</small></p>
                   </div>
                   <div class="timeline-body">
-                    <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                    <p>
+                      <b>{{ score.players.name }} {{ score.players.surname }}</b>
+                      did
+                      <b>{{ score.rules.name }}</b>
+                      for team
+                      <b>{{ score.games_id }}</b>
+                    </p>
+                    <p/>
                   </div>
                 </div>
               </li>
-              <li class="timeline-inverted">
-                <div class="timeline-badge warning"><i class="glyphicon glyphicon-credit-card"/></div>
+              <li v-for="(score,index) in list" v-if="(index)%2 !=0" :key="score" class="timeline-inverted">
+                <div class="timeline-badge warning"><i class="glyphicon glyphicon-check"/></div>
                 <div class="timeline-panel">
                   <div class="timeline-heading">
-                    <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                    <h4 class="timeline-title">{{ score.rules.name }}</h4>
+                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"/> {{ score.updated_at }}</small></p>
                   </div>
                   <div class="timeline-body">
-                    <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                    <p>Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Interagi no mé, cursus quis, vehicula ac nisi. Aenean vel dui dui. Nullam leo erat, aliquet quis tempus a, posuere ut mi. Ut scelerisque neque et turpis posuere pulvinar pellentesque nibh ullamcorper. Pharetra in mattis molestie, volutpat elementum justo. Aenean ut ante turpis. Pellentesque laoreet mé vel lectus scelerisque interdum cursus velit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac mauris lectus, non scelerisque augue. Aenean justo massa.</p>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="timeline-badge danger"><i class="glyphicon glyphicon-credit-card"/></div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                  </div>
-                  <div class="timeline-body">
-                    <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                  </div>
-                </div>
-              </li>
-              <li class="timeline-inverted">
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                  </div>
-                  <div class="timeline-body">
-                    <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="timeline-badge info"><i class="glyphicon glyphicon-floppy-disk"/></div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                  </div>
-                  <div class="timeline-body">
-                    <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                    <hr>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                        <i class="glyphicon glyphicon-cog"/> <span class="caret"/>
-                      </button>
-                      <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"/>
-                        <li><a href="#">Separated link</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                  </div>
-                  <div class="timeline-body">
-                    <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                  </div>
-                </div>
-              </li>
-              <li class="timeline-inverted">
-                <div class="timeline-badge success"><i class="glyphicon glyphicon-thumbs-up"/></div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                  </div>
-                  <div class="timeline-body">
-                    <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                    <p>
+                      <strong>{{ score.players.name }}</strong>
+                      did
+                      <strong>{{ score.rules.name }}</strong>
+                      for
+                      <strong>{{ score.players_id }}</strong>
+                    </p>
                   </div>
                 </div>
               </li>
@@ -107,16 +85,204 @@
           </div>
         </div>
       </el-col>
+      <el-col :span="12">
+        <div >
+          <div class="container">
+            <div class="page-header">
+              <h3 id="timeline">Assist</h3>
+              <el-select v-model="selectedTeam" filterable placeholder="Select Team" @change="getPlayer()" >
+                <el-option
+                  v-for="item in Teams"
+                  :key="item.value"
+                  :label="item.name"
+                  :value="item.id"/>
+              </el-select>
+            </div>
+            <el-row>
+              <h2>Players</h2>
+
+              <el-col v-for="o in PlayerList" :key="o" :span="6" style="padding:2px">
+                <el-card :body-style="{ padding: '2px' }" style="min-height: 73px;text-align: center;">
+                  <el-button @click="getScoreByPlayerId(o.id)">{{ o.name }} {{ o.surname }}</el-button>
+                </el-card >
+              </el-col>
+            </el-row>
+            <el-row>
+              <h2>Details</h2>
+              <el-table
+                :data="playerScore"
+                style="width: 100%">
+                <el-table-column
+                  prop="rules.name"
+                  label="Rules Name"
+                  width="180"/>
+                <el-table-column
+                  prop="rules.value"
+                  label="Score"
+                  width="180"/>
+              </el-table>
+            </el-row>
+
+          </div>
+        </div>
+      </el-col>
     </el-row>
   </div>
 
 </template>
+
+<script>
+// , updateAsset, createAsset
+import { fetchAsset } from '@/api/asset'
+// const CryptoJS = require('crypto-js')
+export default {
+
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: 'success',
+        draft: 'info',
+        deleted: 'danger'
+      }
+      return statusMap[status]
+    }
+  },
+  props: {
+    type: {
+      type: String,
+      default: 'CN'
+    }
+  },
+  data() {
+    return {
+      formData: {},
+      currentDate: '04/20/2019',
+      isParticipantSelected: true,
+      dialogFormVisible: false,
+      selectedTeam: { value: 'Select', id: 0 },
+      gameData: {},
+      PlayerList: [],
+      playerScore: [],
+      selectedPlayer: 0,
+      list: [
+        {
+          team1: 'Some Name',
+          team2: 'Some Name1'
+
+        }
+      ],
+      listQuery: {
+        page: 1,
+        limit: 5,
+        type: this.type,
+        sort: '+id'
+      },
+      loading: false,
+      total: 0
+    }
+  },
+  computed: {
+    totalScoreTeam2() {
+      let x = 0
+      this.list.forEach(score => {
+        if (score.players.team_id === this.gameData.team2_id) { x = x + score.rules.value }
+      })
+
+      return x
+    },
+    totalScoreTeam1() {
+      let x = 0
+      this.list.forEach(score => {
+        if (score.players.team_id === this.gameData.team1_id) { x = x + score.rules.value }
+      })
+
+      return x
+    },
+    Teams() {
+      const teamList = []
+      teamList.push(this.gameData.team1)
+      // teamList.push({name:'Select')
+      teamList.push(this.gameData.team2)
+      return teamList
+    }
+
+  },
+  created() {
+    this.getList()
+    this.getGame()
+  },
+  methods: {
+    getPlayer() {
+      const PlayerList = []
+      fetchAsset(this.listQuery, 'v1/teams', this.selectedTeam).then(response => {
+        this.PlayerList = response.data.players
+        console.log(response.data)
+      }).catch(err => {
+        console.log(err)
+      })
+
+      return PlayerList
+    },
+    getScoreByPlayerId(id) {
+      this.playerScore = []
+      this.list.forEach(score => {
+        if (score.players_id === id) { this.playerScore.push(score) }
+      })
+    },
+    getList() {
+      this.loading = true
+      fetchAsset(this.listQuery, 'v1/scores/game', this.$route.params.id).then(response => {
+        this.list = response.data
+        this.total = response.data.total
+        this.loading = false
+        console.log(response.data)
+      }).catch(err => {
+        console.log(err)
+        this.$notify({
+          title: 'Error',
+          message: err,
+          type: 'error'
+        })
+      })
+    },
+    getGame() {
+      fetchAsset(this.listQuery, 'v1/games', this.$route.params.id).then(response => {
+        this.gameData = response.data
+        this.total = response.data.total
+        console.log(response.data)
+      }).catch(err => {
+        console.log(err)
+        this.$notify({
+          title: 'Error',
+          message: err,
+          type: 'error'
+        })
+      })
+    },
+    handleUpdate(row) {
+      this.formData = Object.assign({}, row) // copy obj
+      this.$router.push('')
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    updateData() {
+      // decrypt
+
+    }
+
+  }
+}
+</script>
 <style type="text/css">
 
   .timeline {
   list-style: none;
   padding: 20px 0 20px;
   position: relative;
+  max-height: 536px;
+  overflow-y: scroll;
 }
 .timeline:before {
   top: 0;
@@ -232,6 +398,9 @@
   margin-top: 0;
   color: inherit;
 }
+.timeline-body{
+  min-width:200px;
+}
 .timeline-body > p,
 .timeline-body > ul {
   margin-bottom: 0;
@@ -239,4 +408,70 @@
 .timeline-body > p + p {
   margin-top: 5px;
 }
+.wallet-header{
+    background: #eef1f6;
+    padding:10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+ .wallet-transaction-container{
+    margin-top: 35px;
+    padding:10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .wallet-amount{
+    font-size: 18px;
+    padding: 5px;
+    font-weight: 600;
+    display: block;
+  }
+  .avatar{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+.top-pannel {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.top-pannel > li {
+    float: left;
+    padding-left: 5px;
+    font-size: 12px;
+    font-weight: 400;
+}
+.top-pannel > li a {
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+  .el-upload{
+        border: #999 1px dotted !important;
+  }
 </style>
