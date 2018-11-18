@@ -15,7 +15,7 @@ English
 
 ## Introduction
 
-Healthcare App made with Hyperledger+Vuejs
+NBA-LIVE_SCORE App made with LARAVEL+Vuejs
 
 It is a magical vue admin based on the newest development stack of vue, built-in i18n solution, typical templates for enterprise applications, lots of awesome features.
 

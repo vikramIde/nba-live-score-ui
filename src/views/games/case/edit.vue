@@ -6,7 +6,7 @@
 import ScoreBoard from './components/ScoreBoard'
 //
 export default {
-  name: 'Edit',
+  name: 'ScoreBoard',
   components: { ScoreBoard }
 }
 </script>

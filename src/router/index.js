@@ -130,6 +130,13 @@ export const asyncRouterMap = [
         component: () => import('@/views/games/case/list'),
         name: 'Scoreboard',
         meta: { title: 'Score Board', icon: 'list' }
+      },
+      {
+        path: 'view/:id(\\d+)',
+        component: () => import('@/views/games/edit'),
+        name: 'View Details',
+        meta: { title: 'View Details', noCache: true },
+        hidden: true
       }
     ]
   },
