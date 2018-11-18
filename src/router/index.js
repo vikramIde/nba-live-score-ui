@@ -115,167 +115,21 @@ export const asyncRouterMap = [
   // nestedRouter,
   // tableRouter,
   {
-    path: '/doctor',
+    path: '/Games',
     component: Layout,
-    redirect: '/doctor/list',
-    name: 'Doctor',
+    redirect: '/games/list',
+    name: 'Games',
+    alwaysShow: true,
     meta: {
-      title: 'Doctor',
-      icon: 'doctor-bold'
+      title: 'Games',
+      icon: 'international'
     },
     children: [
-      {
-        path: 'create',
-        component: () => import('@/views/doctor/create'),
-        name: 'CreateCase',
-        meta: { title: 'Create Case', icon: 'edit' }
-      },
       {
         path: 'list',
-        component: () => import('@/views/doctor/case/list'),
-        name: 'Notifications',
-        meta: { title: 'Notifications', icon: 'list' }
-      }
-    ]
-  },
-
-  {
-    path: '/register',
-    component: Layout,
-    redirect: '/register/list',
-    name: 'Admin',
-    meta: {
-      title: 'Admin',
-      icon: 'peoples'
-    },
-    children: [
-      {
-        path: 'create',
-        component: () => import('@/views/admin/create'),
-        name: 'CreateUser',
-        meta: { title: 'Create User', icon: 'edit' }
-      },
-      {
-        path: 'list',
-        component: () => import('@/views/admin/userlist'),
-        name: 'UserList',
-        meta: { title: 'User List', icon: 'list' }
-      }, {
-        path: 'notification',
-        component: () => import('@/views/admin/case/list'),
-        name: 'AdminNotification',
-        meta: { title: 'Notifications', icon: 'list' }
-      }
-    ]
-  },
-  {
-    path: '/patient',
-    component: Layout,
-    redirect: '/patient/notification',
-    name: 'Patient',
-    alwaysShow: true,
-    meta: {
-      title: 'Patient',
-      icon: 'people'
-    },
-    children: [
-      {
-        path: 'notification',
-        component: () => import('@/views/patient/notificationList'),
-        name: 'Notifications',
-        meta: { title: 'Notifications', icon: 'list' }
-      }
-    ]
-  },
-  {
-    path: '/charity',
-    component: Layout,
-    redirect: '/charity/notification',
-    name: 'Charity',
-    alwaysShow: true,
-    meta: {
-      title: 'Charity',
-      icon: 'charity-bold'
-    },
-    children: [
-      {
-        path: 'notification',
-        component: () => import('@/views/charity/notificationList'),
-        name: 'Notifications',
-        meta: { title: 'Notifications', icon: 'list' }
-      }
-    ]
-  },
-  {
-    path: '/insurance',
-    component: Layout,
-    redirect: '/insurance/notification',
-    name: 'Insurance',
-    alwaysShow: true,
-    meta: {
-      title: 'Insurance',
-      icon: 'health'
-    },
-    children: [
-      {
-        path: 'notification',
-        component: () => import('@/views/insurance/notificationList'),
-        name: 'Notifications',
-        meta: { title: 'Notifications', icon: 'list' }
-      }
-    ]
-  },
-  {
-    path: '/distributor',
-    component: Layout,
-    redirect: '/distributor/notification',
-    name: 'Distributor',
-    alwaysShow: true,
-    meta: {
-      title: 'Distributor',
-      icon: 'guide'
-    },
-    children: [
-      {
-        path: 'wallet',
-        component: () => import('@/views/distributor/wallet'),
-        name: 'Wallet',
-        meta: { title: 'Wallet', icon: 'wallet' }
-      }
-    ]
-  },
-  {
-    path: '/pharma',
-    component: Layout,
-    redirect: '/pharma/medicine',
-    name: 'Pharma',
-    meta: {
-      title: 'Pharma',
-      icon: 'documentation'
-    },
-    children: [
-      {
-        path: '/drug/add',
-        component: () => import('@/views/pharma/medicine/create'),
-        name: 'AddDrugs',
-        meta: { title: 'Add Drugs', icon: 'edit' }
-      },
-      {
-        path: '/drug/list',
-        component: () => import('@/views/pharma/medicine/list'),
-        name: 'DrugList',
-        meta: { title: 'Drug List', icon: 'list' }
-      },
-      {
-        path: 'notification',
-        component: () => import('@/views/pharma/notificationList'),
-        name: 'Notifications',
-        meta: { title: 'Notifications', icon: 'list' }
-      }, {
-        path: 'wallet',
-        component: () => import('@/views/pharma/wallet'),
-        name: 'Wallet',
-        meta: { title: 'Wallet', icon: 'wallet' }
+        component: () => import('@/views/games/case/list'),
+        name: 'Scoreboard',
+        meta: { title: 'Score Board', icon: 'list' }
       }
     ]
   },

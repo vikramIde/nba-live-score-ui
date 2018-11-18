@@ -8,8 +8,8 @@ const app = {
     },
     logo: 'iqvia-color',
     device: 'desktop',
-    bcBaseUrl: 'http://ec2-13-232-5-219.ap-south-1.compute.amazonaws.com:3000',
-    // bcBaseUrl: 'http://localhost:3000',
+    // bcBaseUrl: 'http://ec2-13-232-5-219.ap-south-1.compute.amazonaws.com:3000',
+    bcBaseUrl: 'http://localhost:3000',
     language: Cookies.get('language') || 'en',
     size: Cookies.get('size') || 'medium'
   },

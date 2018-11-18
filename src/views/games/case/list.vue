@@ -1,28 +1,19 @@
 <template>
   <div class="app-container">
-    <el-tabs v-model="activeName" style="margin-top:15px;" type="border-card">
-      <el-tab-pane v-for="item in tabMapOptions" :label="item.label" :key="item.key" :name="item.key">
-        <keep-alive>
-          <medicineList v-if="item.key=='ML'"/>
-          <usercaseList v-if="item.key=='NL'"/>
-        </keep-alive>
-      </el-tab-pane>
-    </el-tabs>
-
+    <gamesList />kjkj
   </div>
 </template>
 
 <script>
 // import { fetchList } from '@/api/article'
 
-import medicineList from '../components/tab-panes/caselist'
-import usercaseList from '../components/tab-panes/usercaselist'
+import gamesList from '../components/tab-panes/gameslist'
 
 // ddd
 
 export default {
   name: 'MedicineList',
-  components: { medicineList, usercaseList },
+  components: { gamesList },
   filters: {
     statusFilter(status) {
       const statusMap = {
