@@ -10,7 +10,7 @@
             <li>
               <div class="wallet-amount">{{ gameData.team1.name }}</div>
               <div style="padding: 5px">Total Score :  {{ totalScoreTeam1 }}</div>
-              <div style="padding: 5px">Attack Count : </div>
+              <div style="padding: 5px">Attack Count : {{ gameData.attack_count }}</div>
             </li>
           </ul>
         </el-col>
@@ -24,7 +24,7 @@
             <li>
               <div class="wallet-amount">{{ gameData.team2.name }}</div>
               <div style="padding: 5px">Tota Score : {{ totalScoreTeam2 }}</div>
-              <div style="padding: 5px">Attack Count : </div>
+              <div style="padding: 5px">Attack Count : {{ gameData.attack_count1 || 0 }}</div>
             </li>
             <li>
               <svg-icon icon-class="international" style="width: 50px;height: 50px"/>
@@ -44,43 +44,45 @@
               <h3 id="timeline">Timeline</h3>
             </div>
             <ul class="timeline" >
-              <li v-for="(score,index) in list" v-if="(index)%2==0" :key="score">
-                <div class="timeline-badge"><i class="glyphicon glyphicon-check"/></div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4 class="timeline-title">{{ score.rules.name }}</h4>
-                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"/> {{ score.updated_at }}</small></p>
+              <template v-for="(score,index) in reversedList" >
+                <li v-if="(index)%2==0" :key="score">
+                  <div class="timeline-badge"><i class="glyphicon glyphicon-check"/></div>
+                  <div class="timeline-panel">
+                    <div class="timeline-heading">
+                      <h4 class="timeline-title">{{ score.rules.name }}</h4>
+                      <p><small class="text-muted"><i class="glyphicon glyphicon-time"/> {{ score.updated_at }}</small></p>
+                    </div>
+                    <div class="timeline-body">
+                      <p>
+                        <b>{{ score.players.name }} {{ score.players.surname }}</b>
+                        did
+                        <b>{{ score.rules.name }}</b>
+                        for team
+                        <b>{{ score.games_id }}</b>
+                      </p>
+                      <p/>
+                    </div>
                   </div>
-                  <div class="timeline-body">
-                    <p>
-                      <b>{{ score.players.name }} {{ score.players.surname }}</b>
-                      did
-                      <b>{{ score.rules.name }}</b>
-                      for team
-                      <b>{{ score.games_id }}</b>
-                    </p>
-                    <p/>
+                </li>
+                <li v-if="(index)%2 >0" :key="score" class="timeline-inverted">
+                  <div class="timeline-badge warning"><i class="glyphicon glyphicon-check"/></div>
+                  <div class="timeline-panel">
+                    <div class="timeline-heading">
+                      <h4 class="timeline-title">{{ score.rules.name }}</h4>
+                      <p><small class="text-muted"><i class="glyphicon glyphicon-time"/> {{ score.updated_at }}</small></p>
+                    </div>
+                    <div class="timeline-body">
+                      <p>
+                        <strong>{{ score.players.name }}</strong>
+                        did
+                        <strong>{{ score.rules.name }}</strong>
+                        for team
+                        <strong>{{ score.games_id }}</strong>
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </li>
-              <li v-for="(score,index) in list" v-if="(index)%2 !=0" :key="score" class="timeline-inverted">
-                <div class="timeline-badge warning"><i class="glyphicon glyphicon-check"/></div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4 class="timeline-title">{{ score.rules.name }}</h4>
-                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"/> {{ score.updated_at }}</small></p>
-                  </div>
-                  <div class="timeline-body">
-                    <p>
-                      <strong>{{ score.players.name }}</strong>
-                      did
-                      <strong>{{ score.rules.name }}</strong>
-                      for
-                      <strong>{{ score.players_id }}</strong>
-                    </p>
-                  </div>
-                </div>
-              </li>
+                </li>
+              </template>
             </ul>
           </div>
         </div>
@@ -92,8 +94,8 @@
               <h3 id="timeline">Assist</h3>
               <el-select v-model="selectedTeam" filterable placeholder="Select Team" @change="getPlayer()" >
                 <el-option
-                  v-for="item in Teams"
-                  :key="item.value"
+                  v-for="(item,num) in Teams"
+                  :key="num"
                   :label="item.name"
                   :value="item.id"/>
               </el-select>
@@ -101,7 +103,7 @@
             <el-row>
               <h2>Players</h2>
 
-              <el-col v-for="o in PlayerList" :key="o" :span="6" style="padding:2px">
+              <el-col v-for="(o,num) in PlayerList" :key="num" :span="6" style="padding:2px">
                 <el-card :body-style="{ padding: '2px' }" style="min-height: 73px;text-align: center;">
                   <el-button @click="getScoreByPlayerId(o.id)">{{ o.name }} {{ o.surname }}</el-button>
                 </el-card >
@@ -134,6 +136,7 @@
 <script>
 // , updateAsset, createAsset
 import { fetchAsset } from '@/api/asset'
+import { notify } from '../../../mixins/notify.js'
 // const CryptoJS = require('crypto-js')
 export default {
 
@@ -147,6 +150,7 @@ export default {
       return statusMap[status]
     }
   },
+  mixins: [notify],
   props: {
     type: {
       type: String,
@@ -182,6 +186,10 @@ export default {
     }
   },
   computed: {
+    reversedList() {
+      const x = this.list
+      return x.reverse()
+    },
     totalScoreTeam2() {
       let x = 0
       this.list.forEach(score => {
@@ -210,6 +218,16 @@ export default {
   created() {
     this.getList()
     this.getGame()
+    var audio = new Audio(require('../core/beep.mp3'))
+    var audio1 = new Audio(require('../core/beep-02.mp3'))
+    this.$on('incoming_update_matches', function(tokenMessage) {
+      this.getGame()
+      audio1.play()
+    })
+    this.$on('incoming_update_scores', function(tokenMessage) {
+      this.getList()
+      audio.play()
+    })
   },
   methods: {
     getPlayer() {
@@ -249,7 +267,7 @@ export default {
       fetchAsset(this.listQuery, 'v1/games', this.$route.params.id).then(response => {
         this.gameData = response.data
         this.total = response.data.total
-        console.log(response.data)
+        // console.log(response.data)
       }).catch(err => {
         console.log(err)
         this.$notify({

@@ -40,6 +40,7 @@
 <script>
 // , updateAsset, createAsset
 import { fetchAsset } from '@/api/asset'
+import { notify } from '../../../../mixins/notify.js'
 // const CryptoJS = require('crypto-js')
 export default {
 
@@ -53,6 +54,7 @@ export default {
       return statusMap[status]
     }
   },
+  mixins: [notify],
   props: {
     type: {
       type: String,
@@ -87,6 +89,9 @@ export default {
   },
   created() {
     this.getList()
+    this.$on('incoming_update_matches', function(tokenMessage) {
+      this.getList()
+    })
   },
   methods: {
     getCommaSepMeds(medsList) {
